@@ -3,12 +3,12 @@ import ssl
 
 # requests are handled here
 def requestHandle(data, addr, DNS, DOT_PORT):
-    tls_conn_sock = tls_connection(DNS, DOT_PORT)
+    tls_conn_sock = tlsConnection(DNS, DOT_PORT)
     tcp_result = sendQuery(tls_conn_sock, data)
     return tcp_result
 
 # Create an SSL context with Cloudflare ----------------------
-def tls_connection(DNS, DOT_PORT):
+def tlsConnection(DNS, DOT_PORT):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(10)
     context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
@@ -39,7 +39,7 @@ try:
     while True:
         conn, addr = server.accept()
         data = conn.recv(1024)
-        result = target=requestHandle(data, addr, DNS, DOT_PORT)
+        result = requestHandle(data, addr, DNS, DOT_PORT)
         conn.sendto(result, addr)
 except Exception as e:
     print(e)
